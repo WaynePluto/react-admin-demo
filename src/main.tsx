@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { initRouteModules } from "./router";
+import "@ant-design/v5-patch-for-react-19";
 import "./styles/reset.css";
 import "uno.css";
 async function start() {

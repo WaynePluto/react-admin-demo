@@ -1,31 +1,16 @@
-import { useState } from "react";
-import "./body.css";
-import "./index.css";
-
-const reactLogo = require("@/assets/react.svg");
-const WebpackLogo = require("@/assets/webpack.png");
+import { Layout } from "../layout";
 
 export function Home() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://webpack.js.org/" target="_blank" rel="noreferrer">
-          <img src={WebpackLogo} className="logo" alt="Webpack logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Layout>
+      <div className="home-page p-6">
+        <h1 className="text-2xl font-bold mb-4">欢迎使用后台管理系统</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="bg-white p-4 rounded shadow">数据统计卡片1</div>
+          <div className="bg-white p-4 rounded shadow">数据统计卡片2</div>
+          <div className="bg-white p-4 rounded shadow">数据统计卡片3</div>
+        </div>
       </div>
-      <h1>Webpack + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/app.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Webpack and React logos to learn more</p>
-    </>
+    </Layout>
   );
 }

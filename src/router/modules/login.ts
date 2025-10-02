@@ -2,10 +2,10 @@ import type { RouteObject } from "react-router-dom";
 
 export default <Readonly<RouteObject[]>>[
   {
-    path: "/",
+    path: "/login",
     lazy: async () => {
-      const { Home } = await import("@/views/home");
-      return { Component: Home };
+      const { Login } = await import("@/views/login");
+      return { Component: Login };
     },
   },
 ];
