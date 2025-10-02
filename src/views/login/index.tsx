@@ -5,6 +5,7 @@ import { authClient } from "@/api/auth";
 import { setToken, setRefreshToken } from "@/utils/auth";
 import { message } from "antd";
 import { MD5 } from "crypto-js";
+import "./login-bg.scss";
 
 export function Login() {
   const navigate = useNavigate();
@@ -38,20 +39,45 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="login-container min-h-screen flex items-center justify-center relative overflow-hidden">
       {contextHolder}
-      <div className="w-full max-w-400px">
+
+      {/* 科技感背景元素 */}
+      <div className="bg-grid"></div>
+      <div className="bg-glow"></div>
+      <div className="floating-particles">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="particle"
+            style={
+              {
+                "--i": i,
+                "--delay": `${i * 0.1}s`,
+                "--size": `${Math.random() * 6 + 2}px`,
+                "--left": `${Math.random() * 100}%`,
+              } as React.CSSProperties
+            }
+          ></div>
+        ))}
+      </div>
+
+      <div className="login-form-container relative z-10 w-full max-w-400px">
         <LoginForm
           title="后台管理系统"
           subTitle="欢迎登录"
           onFinish={handleSubmit}
-          className="bg-white p-8 rounded-lg shadow-lg"
+          className="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-2xl border border-white/20 mb-12"
+          style={{
+            background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,245,255,0.95) 100%)",
+          }}
         >
           <ProFormText
             name="username"
             fieldProps={{
               size: "large",
-              prefix: <UserOutlined className="text-gray-400" />,
+              prefix: <UserOutlined className="text-blue-500" />,
+              className: "rounded-lg",
             }}
             placeholder="请输入用户名"
             rules={[
@@ -65,7 +91,8 @@ export function Login() {
             name="password"
             fieldProps={{
               size: "large",
-              prefix: <LockOutlined className="text-gray-400" />,
+              prefix: <LockOutlined className="text-blue-500" />,
+              className: "rounded-lg",
             }}
             placeholder="请输入密码"
             rules={[

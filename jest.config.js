@@ -6,13 +6,16 @@ module.exports = {
 
   collectCoverage: false,
 
-  coverageDirectory: 'coverage',
+  coverageDirectory: "coverage",
 
-  coverageProvider: 'v8',
+  coverageProvider: "v8",
 
   // ts-jest与swc-jest二选一
   // preset: 'ts-jest',
   transform: {
-    '^.+\\.(t|j)sx?$': '@swc/jest',
+    "^.+\\.(t|j)sx?$": "@swc/jest",
   },
-}
+
+  // testMatch: ["<rootDir>/src/**/*/*.spec.ts"],
+  testMatch: ["<rootDir>/src/views/login/*.spec.ts"],
+};

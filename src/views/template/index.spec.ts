@@ -1,6 +1,6 @@
 import puppeteer, { Browser, Page } from "puppeteer";
 
-describe("sum", () => {
+describe("template 页面测试", () => {
   let browser: Browser;
   let page: Page;
 
