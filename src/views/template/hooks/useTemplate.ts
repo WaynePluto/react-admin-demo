@@ -86,7 +86,6 @@ export const useTemplate = () => {
         return false;
       }
     } catch (error) {
-      console.log("🚀 ~ deleteTemplate ~ error:", error);
       message.error("删除模板失败: " + (error as Error).message);
       return false;
     }

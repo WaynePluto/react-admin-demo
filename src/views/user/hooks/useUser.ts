@@ -1,6 +1,7 @@
 import { userClient } from "@/api/user";
 import type { CreateUserRequest, UpdateUserRequest } from "@/hono-app-type/modules/user/model";
 import { message } from "antd";
+import { MD5 } from "crypto-js";
 import { useCallback, useState } from "react";
 
 export interface UserQueryParams {
@@ -34,6 +35,7 @@ export function useUser() {
 
   const createUser = useCallback(async (userData: CreateUserRequest) => {
     try {
+      userData.password = MD5(userData.password).toString();
       const res = await userClient.index.$post({ json: userData });
       const data = await res.json();
       if (data.code === 200) {

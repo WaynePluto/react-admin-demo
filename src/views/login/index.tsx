@@ -33,7 +33,6 @@ export function Login() {
         messageApi.error(data.msg || "登录失败，请重试！");
       }
     } catch (error) {
-      console.error("Login error:", error);
       messageApi.error("登录失败，请检查网络连接！");
     }
   };

@@ -34,7 +34,7 @@ export function UserForm({ editingUser, onFinish, title, onCancel, ...props }: U
         },
         resetButtonProps: {
           onClick: onCancel,
-        }
+        },
       }}
     >
       <ProFormText

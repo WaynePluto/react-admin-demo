@@ -1,54 +1,51 @@
-import { Form, Input, Button, Space } from "antd";
-import type { FormInstance } from "antd";
-import type { TemplateDetailResponse } from "@/hono-app-type/modules/template/model";
-import { useEffect, useRef } from "react";
+import type { TemplateDetailResponse, CreateTemplateRequest, UpdateTemplateRequest } from "@/hono-app-type/modules/template/model";
+import type { ModalFormProps } from "@ant-design/pro-components";
+import { ProForm, ProFormText } from "@ant-design/pro-components";
+import { isValidElement } from "react";
 
-interface TemplateFormProps {
+interface TemplateFormProps extends Omit<ModalFormProps, "onFinish"> {
   editingTemplate?: TemplateDetailResponse;
-  onFinish: (values: any) => Promise<boolean | void>;
+  onFinish: (values: CreateTemplateRequest | UpdateTemplateRequest) => Promise<boolean>;
   onCancel?: () => void;
 }
 
-export function TemplateForm({ editingTemplate, onFinish, onCancel }: TemplateFormProps) {
-  const [form] = Form.useForm();
-  const formRef = useRef<FormInstance>(null);
+export function TemplateForm({ editingTemplate, onFinish, title, onCancel, ...props }: TemplateFormProps) {
+  const isEdit = !!editingTemplate;
 
-  useEffect(() => {
-    if (editingTemplate && formRef.current) {
-      formRef.current.setFieldsValue({
-        name: editingTemplate.name,
-      });
-    } else if (formRef.current) {
-      formRef.current.resetFields();
-    }
-  }, [editingTemplate]);
+  // Ensure title is string or undefined
+  const safeTitle: string | undefined =
+    typeof title === "string" ? title : isValidElement(title) ? (title as any).props?.title : undefined;
+
+  const handleFinish = async (values: CreateTemplateRequest | UpdateTemplateRequest) => {
+    return await onFinish(values);
+  };
 
   return (
-    <Form
-      form={form}
-      ref={formRef}
+    <ProForm
+      {...props}
+      title={safeTitle}
       layout="vertical"
-      onFinish={onFinish}
-      autoComplete="off"
+      onFinish={handleFinish}
+      initialValues={editingTemplate}
+      submitter={{
+        searchConfig: {
+          submitText: isEdit ? "更新" : "创建",
+          resetText: "重置",
+        },
+        resetButtonProps: {
+          onClick: onCancel,
+        },
+      }}
     >
-      <Form.Item
-        label="模板名称"
+      <ProFormText
         name="name"
-        rules={[{ required: true, message: "请输入模板名称!" }]}
-      >
-        <Input placeholder="请输入模板名称" />
-      </Form.Item>
-
-      <Form.Item>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            {editingTemplate ? "更新" : "创建"}
-          </Button>
-          <Button htmlType="button" onClick={onCancel}>
-            取消
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+        label="模板名称"
+        placeholder="请输入模板名称"
+        rules={[{ required: true, message: "请输入模板名称" }]}
+        fieldProps={{
+          maxLength: 50,
+        }}
+      />
+    </ProForm>
   );
 }

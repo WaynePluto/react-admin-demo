@@ -194,11 +194,7 @@ export function Template() {
           destroyOnHidden
           width={600}
         >
-          <TemplateForm
-            editingTemplate={editingTemplate}
-            onFinish={handleFormFinish}
-            onCancel={() => setFormVisible(false)}
-          />
+          <TemplateForm editingTemplate={editingTemplate} onFinish={handleFormFinish} />
         </Modal>
       </div>
     </Layout>

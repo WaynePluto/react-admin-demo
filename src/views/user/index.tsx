@@ -199,6 +199,15 @@ export function User() {
               total: userList.total,
             };
           }}
+          pagination={{
+            showSizeChanger: true,
+            pageSizeOptions: ["10", "20", "50"],
+            defaultPageSize: 20,
+          }}
+          scroll={{
+            x: "max-content",
+            y: `${window.innerHeight - 432}px`,
+          }}
           search={{
             labelWidth: "auto",
           }}
