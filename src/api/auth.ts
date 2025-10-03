@@ -1,5 +1,5 @@
 import { getRefreshToken, getToken, setToken } from "@/utils/auth";
-import type { AuthApp } from "../hono-app-type/modules/auth";
+import type { AuthApp } from "../hono-api-type/modules/auth";
 import { hc } from "hono/client";
 import { clearToken } from "@/utils/auth";
 

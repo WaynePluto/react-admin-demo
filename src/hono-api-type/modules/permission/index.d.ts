@@ -1,29 +1,19 @@
-export declare const userApp: import("hono/hono-base").HonoBase<import("hono/types").BlankEnv, {
-    "/page": {
+export declare const permissionApp: import("hono/hono-base").HonoBase<import("hono/types").BlankEnv, {
+    "/": {
         $post: {
             input: {
                 json: {
-                    page: number;
-                    pageSize: number;
-                    username?: string | undefined;
-                    orderBy?: "created_at" | "updated_at" | undefined;
-                    order?: "asc" | "desc" | undefined;
+                    name: string;
+                    code: string;
+                    description?: string | undefined;
+                    type?: "custom" | "system" | undefined;
                 };
             };
             output: {
                 code: number;
                 msg: string;
                 data: {
-                    total: number;
-                    list: {
-                        id?: string | undefined;
-                        created_at?: string | undefined;
-                        updated_at?: string | undefined;
-                        username?: string | undefined;
-                        email?: string | undefined;
-                        nickname?: string | undefined;
-                        role_ids?: string[] | undefined;
-                    }[];
+                    id: any;
                 };
             };
             outputFormat: "json";
@@ -45,33 +35,10 @@ export declare const userApp: import("hono/hono-base").HonoBase<import("hono/typ
                     id: string;
                     created_at: string;
                     updated_at: string;
-                    username: string;
-                    email?: string | undefined;
-                    nickname?: string | undefined;
-                    role_ids?: string[] | undefined;
-                };
-            };
-            outputFormat: "json";
-            status: import("hono/utils/http-status").ContentfulStatusCode;
-        };
-    };
-} & {
-    "/": {
-        $post: {
-            input: {
-                json: {
-                    username: string;
-                    password: string;
-                    email?: string | undefined;
-                    nickname?: string | undefined;
-                    role_ids?: string[] | undefined;
-                };
-            };
-            output: {
-                code: number;
-                msg: string;
-                data: {
-                    id: any;
+                    name: string;
+                    code: string;
+                    description?: string | undefined;
+                    type: "system" | "custom";
                 };
             };
             outputFormat: "json";
@@ -87,10 +54,9 @@ export declare const userApp: import("hono/hono-base").HonoBase<import("hono/typ
                 };
             } & {
                 json: {
-                    username?: string | undefined;
-                    email?: string | undefined;
-                    nickname?: string | undefined;
-                    role_ids?: string[] | undefined;
+                    name?: string | undefined;
+                    code?: string | undefined;
+                    description?: string | undefined;
                 };
             };
             output: {
@@ -119,5 +85,39 @@ export declare const userApp: import("hono/hono-base").HonoBase<import("hono/typ
             status: import("hono/utils/http-status").ContentfulStatusCode;
         };
     };
+} & {
+    "/page": {
+        $post: {
+            input: {
+                json: {
+                    page: number;
+                    pageSize: number;
+                    name?: string | undefined;
+                    code?: string | undefined;
+                    type?: "custom" | "system" | undefined;
+                    orderBy?: "created_at" | "updated_at" | undefined;
+                    order?: "asc" | "desc" | undefined;
+                };
+            };
+            output: {
+                code: number;
+                msg: string;
+                data: {
+                    total: number;
+                    list: {
+                        id?: string | undefined;
+                        created_at?: string | undefined;
+                        updated_at?: string | undefined;
+                        name?: string | undefined;
+                        code?: string | undefined;
+                        description?: string | undefined;
+                        type?: "custom" | "system" | undefined;
+                    }[];
+                };
+            };
+            outputFormat: "json";
+            status: import("hono/utils/http-status").ContentfulStatusCode;
+        };
+    };
 }, "/">;
-export type UserApp = typeof userApp;
+export type PermissionApp = typeof permissionApp;

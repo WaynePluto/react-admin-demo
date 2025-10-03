@@ -1,5 +1,5 @@
 import { userClient } from "@/api/user";
-import type { CreateUserRequest, UpdateUserRequest } from "@/hono-app-type/modules/user/model";
+import type { CreateUserRequest, UpdateUserRequest } from "@/hono-api-type/modules/user/model";
 import { message } from "antd";
 import { MD5 } from "crypto-js";
 import { useCallback, useState } from "react";

@@ -1,6 +1,6 @@
 import { JWTPayload } from "@/types/hono";
 import jwt from "jsonwebtoken";
-export declare const createJwtSign: (secret: string) => (payload: JWTPayload) => {
+export declare const createJwtSign: (secret?: string) => (payload: JWTPayload) => {
     token: string;
     refresh_token: string;
 };

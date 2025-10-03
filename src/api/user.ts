@@ -1,5 +1,5 @@
 import { hc } from "hono/client";
-import type { UserApp } from "../hono-app-type/modules/user";
+import type { UserApp } from "../hono-api-type/modules/user";
 import { customFetch } from "./auth";
 
 export const userClient = hc<UserApp>("/api/user", {

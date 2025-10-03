@@ -1,4 +1,4 @@
-import type { TemplateDetailResponse } from "@/hono-app-type/modules/template/model";
+import type { TemplateDetailResponse } from "@/hono-api-type/modules/template/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import type { ProColumns, ActionType } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
@@ -21,6 +21,7 @@ export function Template() {
       dataIndex: "id",
       key: "id",
       ellipsis: true,
+      search: false,
     },
     {
       title: "模板名称",
@@ -121,7 +122,7 @@ export function Template() {
 
   return (
     <Layout>
-      <div className="template-page p-6">
+      <div className="template-page">
         <ProTable<TemplateDetailResponse>
           headerTitle="模板管理"
           rowKey="id"
@@ -169,7 +170,7 @@ export function Template() {
           }}
           scroll={{
             x: "max-content",
-            y: `${window.innerHeight - 432}px`,
+            y: `${window.innerHeight - 400}px`,
           }}
           search={{
             labelWidth: "auto",

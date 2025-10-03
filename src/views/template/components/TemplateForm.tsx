@@ -1,4 +1,8 @@
-import type { TemplateDetailResponse, CreateTemplateRequest, UpdateTemplateRequest } from "@/hono-app-type/modules/template/model";
+import type {
+  TemplateDetailResponse,
+  CreateTemplateRequest,
+  UpdateTemplateRequest,
+} from "@/hono-api-type/modules/template/model";
 import type { ModalFormProps } from "@ant-design/pro-components";
 import { ProForm, ProFormText } from "@ant-design/pro-components";
 import { isValidElement } from "react";

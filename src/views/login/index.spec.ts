@@ -13,7 +13,11 @@ describe("login 页面测试", () => {
   });
 
   afterAll(async () => {
-    await browser.close();
+    await page.close();
+    const pages = await browser.pages();
+    if (pages.length === 1) {
+      await browser.close();
+    }
   });
 
   it("测试登录功能 - 成功登录", async () => {

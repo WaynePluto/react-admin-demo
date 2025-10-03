@@ -1,4 +1,4 @@
-import type { UserDetailResponse } from "@/hono-app-type/modules/user/model";
+import type { UserDetailResponse } from "@/hono-api-type/modules/user/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import type { ProColumns, ActionType } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
@@ -7,18 +7,14 @@ import { useState, useRef } from "react";
 import { Layout } from "../layout";
 import { UserForm } from "./components/UserForm";
 import { useUser } from "./hooks/useUser";
+import { useRole } from "./hooks/useRole";
 import { omit } from "lodash-es";
-
-const roleMap = {
-  admin: { text: "管理员", color: "red" },
-  editor: { text: "编辑", color: "blue" },
-  viewer: { text: "查看者", color: "green" },
-};
 
 export function User() {
   const [formVisible, setFormVisible] = useState(false);
   const [editingUser, setEditingUser] = useState<UserDetailResponse | undefined>();
   const { fetchUsers, createUser, updateUser, deleteUser } = useUser();
+  const { roleMap, loading: roleLoading } = useRole();
   const actionRef = useRef<ActionType>(null);
 
   const columns: ProColumns<UserDetailResponse>[] = [
@@ -49,10 +45,10 @@ export function User() {
       dataIndex: "role_ids",
       key: "role_ids",
       render: (_, record) => {
-        const roleIds = record.role_ids || [];
+        const roleCodes = record.role_codes || [];
         return (
           <Space wrap>
-            {roleIds.map(roleId => {
+            {roleCodes.map(roleId => {
               const role = roleMap[roleId as keyof typeof roleMap];
               return role ? (
                 <Tag key={roleId} color={role.color}>
@@ -158,7 +154,7 @@ export function User() {
 
   return (
     <Layout>
-      <div className="user-page p-6">
+      <div className="user-page">
         <ProTable<UserDetailResponse>
           headerTitle="用户管理"
           rowKey="id"
@@ -206,7 +202,7 @@ export function User() {
           }}
           scroll={{
             x: "max-content",
-            y: `${window.innerHeight - 432}px`,
+            y: `${window.innerHeight - 400}px`,
           }}
           search={{
             labelWidth: "auto",
@@ -221,6 +217,7 @@ export function User() {
               新建用户
             </Button>,
           ]}
+          loading={roleLoading}
         />
 
         <Modal

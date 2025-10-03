@@ -4,7 +4,7 @@ import type {
   TemplateDetailResponse,
   CreateTemplateRequest,
   UpdateTemplateRequest,
-} from "@/hono-app-type/modules/template/model";
+} from "@/hono-api-type/modules/template/model";
 
 export const useTemplate = () => {
   const fetchTemplates = async (params: {

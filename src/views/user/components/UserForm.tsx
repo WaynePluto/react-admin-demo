@@ -1,4 +1,4 @@
-import type { CreateUserRequest, UpdateUserRequest } from "@/hono-app-type/modules/user/model";
+import type { CreateUserRequest, UpdateUserRequest } from "@/hono-api-type/modules/user/model";
 import type { ModalFormProps } from "@ant-design/pro-components";
 import { ProForm, ProFormSelect, ProFormText } from "@ant-design/pro-components";
 import { isValidElement } from "react";
@@ -82,17 +82,7 @@ export function UserForm({ editingUser, onFinish, title, onCancel, ...props }: U
         }}
       />
 
-      <ProFormSelect
-        name="role_ids"
-        label="角色"
-        mode="multiple"
-        placeholder="请选择角色"
-        options={[
-          { label: "管理员", value: "admin" },
-          { label: "编辑", value: "editor" },
-          { label: "查看者", value: "viewer" },
-        ]}
-      />
+      <ProFormSelect name="role_ids" label="角色" mode="multiple" placeholder="请选择角色" options={[]} />
     </ProForm>
   );
 }
