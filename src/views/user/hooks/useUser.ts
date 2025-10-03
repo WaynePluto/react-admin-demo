@@ -1,19 +1,13 @@
-import { useCallback, useState } from "react";
-import { message } from "antd";
 import { userClient } from "@/api/user";
-import type {
-  CreateUserRequest,
-  UpdateUserRequest,
-  UserDetailResponse,
-  UserListResponse,
-} from "@/hono-app-type/modules/user/model";
+import type { CreateUserRequest, UpdateUserRequest } from "@/hono-app-type/modules/user/model";
+import { message } from "antd";
+import { useCallback, useState } from "react";
 
 export interface UserQueryParams {
   page: number;
   pageSize: number;
-  keyword?: string;
-  orderBy?: 'created_at' | 'updated_at';
-  order?: 'asc' | 'desc';
+  orderBy?: "created_at" | "updated_at";
+  order?: "asc" | "desc";
 }
 
 export function useUser() {

@@ -1,4 +1,4 @@
-import { LogoutOutlined, UserOutlined, TeamOutlined } from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined, TeamOutlined, FileOutlined } from "@ant-design/icons";
 import { ProLayout } from "@ant-design/pro-components";
 import { Dropdown } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +44,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
               path: "/",
               name: "首页",
               icon: <UserOutlined />,
+            },
+            {
+              path: "/template",
+              name: "模板管理",
+              icon: <FileOutlined />,
             },
             {
               path: "/users",

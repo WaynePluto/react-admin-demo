@@ -5,7 +5,6 @@ export declare const userApp: import("hono/hono-base").HonoBase<import("hono/typ
                 json: {
                     page: number;
                     pageSize: number;
-                    keyword?: string | undefined;
                     username?: string | undefined;
                     orderBy?: "created_at" | "updated_at" | undefined;
                     order?: "asc" | "desc" | undefined;

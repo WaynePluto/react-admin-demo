@@ -29,7 +29,7 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
                 code: number;
                 msg: string;
                 data: {
-                    id: number;
+                    id: string;
                     created_at: string;
                     updated_at: string;
                     name: string;
@@ -84,7 +84,6 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
                 json: {
                     page: number;
                     pageSize: number;
-                    keyword?: string | undefined;
                     name?: string | undefined;
                     orderBy?: "created_at" | "updated_at" | undefined;
                     order?: "asc" | "desc" | undefined;
@@ -96,10 +95,10 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
                 data: {
                     total: number;
                     list: {
-                        id: number;
-                        created_at: string;
-                        updated_at: string;
-                        name: string;
+                        id?: string | undefined;
+                        created_at?: string | undefined;
+                        updated_at?: string | undefined;
+                        name?: string | undefined;
                     }[];
                 };
             };

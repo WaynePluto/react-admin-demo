@@ -9,7 +9,7 @@ let isRefreshing = false;
 let requests: any[] = [];
 export const customFetch = async (url, options): Promise<Response> => {
   const getOptions = () => ({
-    body: JSON.stringify(JSON.parse(options.body)),
+    body: options.body ? JSON.stringify(JSON.parse(options.body)) : undefined,
     headers: {
       Authorization: "Bearer " + getToken(),
       "Content-Type": "application/json",
