@@ -1,6 +1,7 @@
 import { getRefreshToken, getToken, setToken } from "@/utils/auth";
 import type { AuthApp } from "../hono-app-type/modules/auth";
 import { hc } from "hono/client";
+import { clearToken } from "@/utils/auth";
 
 export const authClient = hc<AuthApp>("/api/auth");
 
@@ -43,6 +44,9 @@ export const customFetch = async (url, options): Promise<Response> => {
         isRefreshing = false;
         return secondRes;
       } else {
+        // token刷新失败，跳转登录页面
+        clearToken();
+        window.location.href = "/login";
         return newResponse;
       }
     }

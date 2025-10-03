@@ -9,7 +9,9 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
             output: {
                 code: number;
                 msg: string;
-                data: number | null;
+                data: {
+                    id: any;
+                };
             };
             outputFormat: "json";
             status: import("hono/utils/http-status").ContentfulStatusCode;
@@ -30,9 +32,7 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
                     id: number;
                     created_at: string;
                     updated_at: string;
-                    data: {
-                        name: string;
-                    };
+                    name: string;
                 };
             };
             outputFormat: "json";
@@ -48,7 +48,7 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
                 };
             } & {
                 json: {
-                    name: string;
+                    name?: string | undefined;
                 };
             };
             output: {
@@ -84,6 +84,10 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
                 json: {
                     page: number;
                     pageSize: number;
+                    keyword?: string | undefined;
+                    name?: string | undefined;
+                    orderBy?: "created_at" | "updated_at" | undefined;
+                    order?: "asc" | "desc" | undefined;
                 };
             };
             output: {
@@ -95,9 +99,7 @@ export declare const templateApp: import("hono/hono-base").HonoBase<import("hono
                         id: number;
                         created_at: string;
                         updated_at: string;
-                        data: {
-                            name: string;
-                        };
+                        name: string;
                     }[];
                 };
             };

@@ -6,6 +6,9 @@ export declare const userApp: import("hono/hono-base").HonoBase<import("hono/typ
                     page: number;
                     pageSize: number;
                     keyword?: string | undefined;
+                    username?: string | undefined;
+                    orderBy?: "created_at" | "updated_at" | undefined;
+                    order?: "asc" | "desc" | undefined;
                 };
             };
             output: {
@@ -14,13 +17,13 @@ export declare const userApp: import("hono/hono-base").HonoBase<import("hono/typ
                 data: {
                     total: number;
                     list: {
-                        id: string;
-                        username: string;
+                        id?: string | undefined;
+                        created_at?: string | undefined;
+                        updated_at?: string | undefined;
+                        username?: string | undefined;
                         email?: string | undefined;
                         nickname?: string | undefined;
                         role_ids?: string[] | undefined;
-                        created_at: string;
-                        updated_at: string;
                     }[];
                 };
             };
@@ -41,12 +44,12 @@ export declare const userApp: import("hono/hono-base").HonoBase<import("hono/typ
                 msg: string;
                 data: {
                     id: string;
+                    created_at: string;
+                    updated_at: string;
                     username: string;
                     email?: string | undefined;
                     nickname?: string | undefined;
                     role_ids?: string[] | undefined;
-                    created_at: string;
-                    updated_at: string;
                 };
             };
             outputFormat: "json";

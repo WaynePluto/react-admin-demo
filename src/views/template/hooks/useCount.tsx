@@ -2,7 +2,7 @@
  * 使用AI生成上下文代码，参考提示词：
  * 帮我封装一个功能到react context中，要有一个状态count, 一个addCount的修改方法。
  * 请将状态和行为进行上下文分离。
- * 不需要使用useCallback,useMemo等优化措施。
+ * 可以使用useCallback,useMemo等优化措施，但是不要过度优化。
  * 最后把你写的typescript代码都写一个useCount.ts中。
  */
 

@@ -1,4 +1,4 @@
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined, TeamOutlined } from "@ant-design/icons";
 import { ProLayout } from "@ant-design/pro-components";
 import { Dropdown } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -48,10 +48,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {
               path: "/users",
               name: "用户管理",
-              icon: <UserOutlined />,
+              icon: <TeamOutlined />,
             },
           ],
         }}
+        onMenuHeaderClick={() => navigate("/")}
+        menuItemRender={(item, dom) => <a onClick={() => navigate(item.path || "/")}>{dom}</a>}
       >
         {children}
       </ProLayout>
