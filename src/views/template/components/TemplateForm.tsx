@@ -39,6 +39,9 @@ export function TemplateForm({ editingTemplate, onFinish, title, onCancel, ...pr
         resetButtonProps: {
           onClick: onCancel,
         },
+        submitButtonProps: {
+          id: "template-form-submit",
+        },
       }}
     >
       <ProFormText
@@ -47,6 +50,7 @@ export function TemplateForm({ editingTemplate, onFinish, title, onCancel, ...pr
         placeholder="请输入模板名称"
         rules={[{ required: true, message: "请输入模板名称" }]}
         fieldProps={{
+          id: "template-form-name",
           maxLength: 50,
         }}
       />

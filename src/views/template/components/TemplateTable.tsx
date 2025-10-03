@@ -179,7 +179,7 @@ export function TemplateTable() {
           },
         }}
         toolBarRender={() => [
-          <Button key="add" type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+          <Button className="add-template" key="add" type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
             新建模板
           </Button>,
         ]}

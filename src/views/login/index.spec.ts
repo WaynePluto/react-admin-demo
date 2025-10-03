@@ -74,7 +74,7 @@ describe("login 页面测试", () => {
     await loginButton?.click();
 
     // 等待错误消息出现
-    await page.waitForSelector(".ant-message-error", { timeout: 5000 });
+    await page.waitForSelector(".ant-message-error", { timeout: 1000 });
 
     // 验证仍然在登录页面
     expect(page.url()).toBe("http://localhost:8080/login");

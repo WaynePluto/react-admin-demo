@@ -1,9 +1,9 @@
 import puppeteer from "puppeteer";
 
-export async function getLoginBrower() {
+export async function getLoginBrower(headless = true) {
   const browser = await puppeteer.launch({
     executablePath: process.env.ChromePath,
-    headless: true,
+    headless,
   });
   const page = await browser.newPage();
   // 打开登录页面

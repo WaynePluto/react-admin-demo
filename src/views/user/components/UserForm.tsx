@@ -47,6 +47,7 @@ export function UserForm({ editingUser, onFinish, title, onCancel, ...props }: U
           { min: 3, max: 20, message: "用户名长度为3-20个字符" },
         ]}
         fieldProps={{
+          id: "user-form-username",
           maxLength: 20,
         }}
       />
@@ -61,6 +62,7 @@ export function UserForm({ editingUser, onFinish, title, onCancel, ...props }: U
             { min: 6, max: 20, message: "密码长度为6-20个字符" },
           ]}
           fieldProps={{
+            id: "user-form-password",
             maxLength: 20,
           }}
         />
