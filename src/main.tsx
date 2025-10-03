@@ -5,6 +5,7 @@ import { initRouteModules } from "./router";
 import "@ant-design/v5-patch-for-react-19";
 import "./styles/reset.css";
 import "uno.css";
+import "./styles/ant-table-body.scss";
 async function start() {
   try {
     const router = await initRouteModules();
