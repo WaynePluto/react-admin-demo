@@ -1,10 +1,6 @@
 import { templateClient } from "@/api/template";
+import type { CreateTemplateRequest, UpdateTemplateRequest } from "@/hono-api-type/modules/template/model";
 import { message } from "antd";
-import type {
-  TemplateDetailResponse,
-  CreateTemplateRequest,
-  UpdateTemplateRequest,
-} from "@/hono-api-type/modules/template/model";
 
 export const useTemplate = () => {
   const fetchTemplates = async (params: {

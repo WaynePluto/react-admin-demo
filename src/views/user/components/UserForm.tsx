@@ -2,7 +2,7 @@ import type { CreateUserRequest, UpdateUserRequest } from "@/hono-api-type/modul
 import type { ModalFormProps } from "@ant-design/pro-components";
 import { ProForm, ProFormSelect, ProFormText } from "@ant-design/pro-components";
 import { isValidElement } from "react";
-
+import { useRoleState } from "../hooks/useRoleContext";
 interface UserFormProps extends Omit<ModalFormProps, "onFinish"> {
   editingUser?: { id: string } & UpdateUserRequest;
   onFinish: (values: CreateUserRequest | UpdateUserRequest) => Promise<boolean>;
@@ -11,6 +11,7 @@ interface UserFormProps extends Omit<ModalFormProps, "onFinish"> {
 
 export function UserForm({ editingUser, onFinish, title, onCancel, ...props }: UserFormProps) {
   const isEdit = !!editingUser;
+  const { roleList, loading } = useRoleState();
 
   // Ensure title is string or undefined
   const safeTitle: string | undefined =
@@ -82,7 +83,19 @@ export function UserForm({ editingUser, onFinish, title, onCancel, ...props }: U
         }}
       />
 
-      <ProFormSelect name="role_ids" label="角色" mode="multiple" placeholder="请选择角色" options={[]} />
+      <ProFormSelect
+        name="role_ids"
+        label="角色"
+        mode="multiple"
+        placeholder="请选择角色"
+        options={roleList.map(role => ({
+          label: role.name,
+          value: role.code,
+        }))}
+        fieldProps={{
+          loading,
+        }}
+      />
     </ProForm>
   );
 }
