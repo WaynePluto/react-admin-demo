@@ -11,7 +11,8 @@ import { PermissionForm } from "./PermissionForm";
 export function PermissionTable() {
   const [formVisible, setFormVisible] = useState(false);
   const [editingPermission, setEditingPermission] = useState<PermissionDetailResponse | undefined>();
-  const { fetchPermissions, createPermission, updatePermission, deletePermission } = usePermission();
+  const { fetchPermissions, fetchPermissionDetail, createPermission, updatePermission, deletePermission } =
+    usePermission();
   const actionRef = useRef<ActionType>(null);
 
   const columns: ProColumns<PermissionDetailResponse>[] = [
@@ -103,9 +104,13 @@ export function PermissionTable() {
     setFormVisible(true);
   };
 
-  const handleEdit = (permission: PermissionDetailResponse) => {
-    setEditingPermission(permission);
-    setFormVisible(true);
+  const handleEdit = async (permission: PermissionDetailResponse) => {
+    // 调用详情接口获取最新数据
+    const detail = await fetchPermissionDetail(permission.id);
+    if (detail) {
+      setEditingPermission(detail);
+      setFormVisible(true);
+    }
   };
 
   const handleDelete = async (id: string) => {

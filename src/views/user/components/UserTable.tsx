@@ -12,7 +12,7 @@ import { useRoleContext, useRoleState } from "../hooks/useRoleContext";
 export function UserTable() {
   const [formVisible, setFormVisible] = useState(false);
   const [editingUser, setEditingUser] = useState<UserDetailResponse | undefined>();
-  const { fetchUsers, createUser, updateUser, deleteUser } = useUser();
+  const { fetchUsers, fetchUserDetail, createUser, updateUser, deleteUser } = useUser();
   const { state: roleState, actions: roleActions } = useRoleContext();
   const actionRef = useRef<ActionType>(null);
 
@@ -102,9 +102,13 @@ export function UserTable() {
     setFormVisible(true);
   };
 
-  const handleEdit = (user: UserDetailResponse) => {
-    setEditingUser(user);
-    setFormVisible(true);
+  const handleEdit = async (user: UserDetailResponse) => {
+    // 调用详情接口获取最新数据
+    const detail = await fetchUserDetail(user.id);
+    if (detail) {
+      setEditingUser(detail);
+      setFormVisible(true);
+    }
   };
 
   const handleDelete = async (id: string) => {

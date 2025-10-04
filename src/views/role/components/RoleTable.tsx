@@ -11,7 +11,7 @@ import { RoleForm } from "./RoleForm";
 export function RoleTable() {
   const [formVisible, setFormVisible] = useState(false);
   const [editingRole, setEditingRole] = useState<RoleDetailResponse | undefined>();
-  const { fetchRoles, createRole, updateRole, deleteRole } = useRole();
+  const { fetchRoles, fetchRoleDetail, createRole, updateRole, deleteRole } = useRole();
   const actionRef = useRef<ActionType>(null);
 
   const columns: ProColumns<RoleDetailResponse>[] = [
@@ -94,9 +94,13 @@ export function RoleTable() {
     setFormVisible(true);
   };
 
-  const handleEdit = (role: RoleDetailResponse) => {
-    setEditingRole(role);
-    setFormVisible(true);
+  const handleEdit = async (role: RoleDetailResponse) => {
+    // 调用详情接口获取最新数据
+    const detail = await fetchRoleDetail(role.id);
+    if (detail) {
+      setEditingRole(detail);
+      setFormVisible(true);
+    }
   };
 
   const handleDelete = async (id: string) => {

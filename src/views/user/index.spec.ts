@@ -59,6 +59,8 @@ describe("用户管理页面测试", () => {
     // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的最后一个td元素, 下面的div, 下面的第一个button
     const editButton = await testPage.$("tbody tr:nth-child(2) td:last-child div button:first-child");
     await editButton?.click();
+    // 等待获取用户详情接口返回
+    await new Promise(resolve => setTimeout(resolve, 500));
     const editNickname = "测试用户" + Math.floor(Math.random() * 10000);
     const editNicknameInput = await testPage.$('input[id="nickname"]');
 

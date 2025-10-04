@@ -54,6 +54,8 @@ describe("temlate 页面测试", () => {
     // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的最后一个td元素, 下面的div, 下面的第一个button
     const editButton = await testPage.$("tbody tr:nth-child(2) td:last-child div button:first-child");
     await editButton?.click();
+    // 等待获取模板详情接口返回
+    await new Promise(resolve => setTimeout(resolve, 500));
     const editTemplateName = "模板(测试)" + Math.random().toFixed(2);
     const editNameInput = await testPage.$('input[id="template-form-name"]');
     await editNameInput?.evaluate(el => (el.value = ""));
@@ -65,6 +67,7 @@ describe("temlate 页面测试", () => {
     // 验证编辑成功提示语
     const editMsg = await testPage.locator(".ant-message-custom-content.ant-message-success").wait();
     expect(editMsg).not.toBeNull();
+    // 等待接口返回
     await new Promise(resolve => setTimeout(resolve, 500));
     // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的第1个td元素也就是名称单元格，在下面的span的文本
     const editSpanText = await testPage

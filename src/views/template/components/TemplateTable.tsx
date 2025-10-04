@@ -11,7 +11,7 @@ import { TemplateForm } from "./TemplateForm";
 export function TemplateTable() {
   const [formVisible, setFormVisible] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<TemplateDetailResponse | undefined>();
-  const { fetchTemplates, createTemplate, updateTemplate, deleteTemplate } = useTemplate();
+  const { fetchTemplates, fetchTemplateDetail, createTemplate, updateTemplate, deleteTemplate } = useTemplate();
   const actionRef = useRef<ActionType>(null);
 
   const columns: ProColumns<TemplateDetailResponse>[] = [
@@ -81,9 +81,13 @@ export function TemplateTable() {
     setFormVisible(true);
   };
 
-  const handleEdit = (template: TemplateDetailResponse) => {
-    setEditingTemplate(template);
-    setFormVisible(true);
+  const handleEdit = async (template: TemplateDetailResponse) => {
+    // 调用详情接口获取最新数据
+    const detail = await fetchTemplateDetail(template.id);
+    if (detail) {
+      setEditingTemplate(detail);
+      setFormVisible(true);
+    }
   };
 
   const handleDelete = async (id: string) => {

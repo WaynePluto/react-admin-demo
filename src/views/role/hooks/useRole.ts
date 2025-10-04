@@ -1,5 +1,5 @@
 import { roleClient } from "@/api/role";
-import type { CreateRoleRequest, UpdateRoleRequest } from "@/hono-api-type/modules/role/model";
+import type { CreateRoleRequest, UpdateRoleRequest, RoleDetailResponse } from "@/hono-api-type/modules/role/model";
 import { message } from "antd";
 
 export const useRole = () => {
@@ -26,6 +26,25 @@ export const useRole = () => {
     } catch (error) {
       message.error("获取角色列表失败: " + (error as Error).message);
       return { total: 0, list: [] };
+    }
+  };
+
+  const fetchRoleDetail = async (id: string) => {
+    try {
+      const res = await roleClient[":id"].$get({
+        param: { id },
+      });
+
+      const json = await res.json();
+      if (json.code === 200) {
+        return json.data;
+      } else {
+        message.error(json.msg || "获取角色详情失败");
+        return null;
+      }
+    } catch (error) {
+      message.error("获取角色详情失败: " + (error as Error).message);
+      return null;
     }
   };
 
@@ -91,6 +110,7 @@ export const useRole = () => {
 
   return {
     fetchRoles,
+    fetchRoleDetail,
     createRole,
     updateRole,
     deleteRole,

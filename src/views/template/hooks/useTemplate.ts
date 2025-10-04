@@ -1,5 +1,5 @@
 import { templateClient } from "@/api/template";
-import type { CreateTemplateRequest, UpdateTemplateRequest } from "@/hono-api-type/modules/template/model";
+import type { CreateTemplateRequest, TemplateDetailResponse, UpdateTemplateRequest } from "@/hono-api-type/modules/template/model";
 import { message } from "antd";
 
 export const useTemplate = () => {
@@ -25,6 +25,25 @@ export const useTemplate = () => {
     } catch (error) {
       message.error("获取模板列表失败: " + (error as Error).message);
       return { total: 0, list: [] };
+    }
+  };
+
+  const fetchTemplateDetail = async (id: string) => {
+    try {
+      const res = await templateClient[":id"].$get({
+        param: { id },
+      });
+
+      const json = await res.json();
+      if (json.code === 200) {
+        return json.data;
+      } else {
+        message.error(json.msg || "获取模板详情失败");
+        return null;
+      }
+    } catch (error) {
+      message.error("获取模板详情失败: " + (error as Error).message);
+      return null;
     }
   };
 
@@ -90,6 +109,7 @@ export const useTemplate = () => {
 
   return {
     fetchTemplates,
+    fetchTemplateDetail,
     createTemplate,
     updateTemplate,
     deleteTemplate,

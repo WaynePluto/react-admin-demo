@@ -1,5 +1,5 @@
 import { userClient } from "@/api/user";
-import type { CreateUserRequest, UpdateUserRequest } from "@/hono-api-type/modules/user/model";
+import type { CreateUserRequest, UpdateUserRequest, UserDetailResponse } from "@/hono-api-type/modules/user/model";
 import { message } from "antd";
 import { MD5 } from "crypto-js";
 import { useCallback, useState } from "react";
@@ -30,6 +30,22 @@ export function useUser() {
       return { total: 0, list: [] };
     } finally {
       setLoading(false);
+    }
+  }, []);
+
+  const fetchUserDetail = useCallback(async (id: string) => {
+    try {
+      const res = await userClient[":id"].$get({ param: { id } });
+      const json = await res.json();
+      if (json.code === 200) {
+        return json.data;
+      } else {
+        message.error(json.msg || "获取用户详情失败");
+        return null;
+      }
+    } catch (error) {
+      message.error("网络错误，请重试");
+      return null;
     }
   }, []);
 
@@ -91,6 +107,7 @@ export function useUser() {
   return {
     loading,
     fetchUsers,
+    fetchUserDetail,
     createUser,
     updateUser,
     deleteUser,

@@ -1,5 +1,9 @@
 import { permissionClient } from "@/api/permission";
-import type { CreatePermissionRequest, UpdatePermissionRequest } from "@/hono-api-type/modules/permission/model";
+import type {
+  CreatePermissionRequest,
+  UpdatePermissionRequest,
+  PermissionDetailResponse,
+} from "@/hono-api-type/modules/permission/model";
 import { message } from "antd";
 
 export const usePermission = () => {
@@ -27,6 +31,25 @@ export const usePermission = () => {
     } catch (error) {
       message.error("获取权限列表失败: " + (error as Error).message);
       return { total: 0, list: [] };
+    }
+  };
+
+  const fetchPermissionDetail = async (id: string) => {
+    try {
+      const res = await permissionClient[":id"].$get({
+        param: { id },
+      });
+
+      const json = await res.json();
+      if (json.code === 200) {
+        return json.data;
+      } else {
+        message.error(json.msg || "获取权限详情失败");
+        return null;
+      }
+    } catch (error) {
+      message.error("获取权限详情失败: " + (error as Error).message);
+      return null;
     }
   };
 
@@ -93,6 +116,7 @@ export const usePermission = () => {
 
   return {
     fetchPermissions,
+    fetchPermissionDetail,
     createPermission,
     updatePermission,
     deletePermission,
