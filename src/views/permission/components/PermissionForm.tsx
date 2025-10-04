@@ -20,24 +20,18 @@ export function PermissionForm({ editingPermission, onFinish, title, onCancel, .
   const safeTitle: string | undefined =
     typeof title === "string" ? title : isValidElement(title) ? (title as any).props?.title : undefined;
 
-  const handleFinish = async (values: CreatePermissionRequest | UpdatePermissionRequest) => {
-    // 强制设置权限类型为"自定义权限"
-    const valuesWithType = {
-      ...values,
-      type: "custom" as const,
-    };
-    return await onFinish(valuesWithType);
-  };
+  // 设置默认类型为自定义
+  const defaultType = isEdit ? editingPermission?.type : "custom";
 
   return (
     <ProForm
       {...props}
       title={safeTitle}
       layout="vertical"
-      onFinish={handleFinish}
+      onFinish={onFinish}
       initialValues={{
         ...editingPermission,
-        type: "custom",
+        type: defaultType,
       }}
       submitter={{
         searchConfig: {
@@ -86,11 +80,12 @@ export function PermissionForm({ editingPermission, onFinish, title, onCancel, .
         name="type"
         label="权限类型"
         initialValue="custom"
-        disabled
+        disabled={editingPermission?.type === "system"}
         options={[
           {
             label: "系统内置权限",
             value: "system",
+            disabled: true,
           },
           {
             label: "自定义权限",

@@ -1,6 +1,6 @@
 import type { CreateRoleRequest, RoleDetailResponse, UpdateRoleRequest } from "@/hono-api-type/modules/role/model";
 import type { ModalFormProps } from "@ant-design/pro-components";
-import { ProForm, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
+import { ProForm, ProFormRadio, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
 import { Form, TreeSelect } from "antd";
 import { isValidElement } from "react";
 import { usePermissionTree } from "../hooks/usePermissionTree";
@@ -20,9 +20,8 @@ export function RoleForm({ editingRole, onFinish, title, onCancel, ...props }: R
   const safeTitle: string | undefined =
     typeof title === "string" ? title : isValidElement(title) ? (title as any).props?.title : undefined;
 
-  const handleFinish = async (values: CreateRoleRequest | UpdateRoleRequest) => {
-    return await onFinish(values);
-  };
+  // 设置默认类型为自定义
+  const defaultType = isEdit ? editingRole?.type : "custom";
 
   // 根据是否是系统角色决定是否禁用权限选择
   const isPermissionSelectDisabled = isEdit && editingRole?.type === "system";
@@ -32,8 +31,11 @@ export function RoleForm({ editingRole, onFinish, title, onCancel, ...props }: R
       {...props}
       title={safeTitle}
       layout="vertical"
-      onFinish={handleFinish}
-      initialValues={editingRole}
+      onFinish={onFinish}
+      initialValues={{
+        ...editingRole,
+        type: defaultType,
+      }}
       form={form}
       submitter={{
         searchConfig: {
@@ -67,6 +69,24 @@ export function RoleForm({ editingRole, onFinish, title, onCancel, ...props }: R
           id: "role-form-code",
           maxLength: 50,
         }}
+      />
+      <ProFormRadio.Group
+        name="type"
+        label="角色类型"
+        initialValue="custom"
+        disabled={editingRole?.type === "system"}
+        options={[
+          {
+            label: "系统内置角色",
+            value: "system",
+            disabled: true,
+          },
+          {
+            label: "自定义角色",
+            value: "custom",
+          },
+        ]}
+        radioType="button"
       />
       <ProFormTextArea
         name="description"

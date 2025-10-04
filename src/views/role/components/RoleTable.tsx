@@ -28,6 +28,15 @@ export function RoleTable() {
       ellipsis: true,
     },
     {
+      title: "角色类型",
+      dataIndex: "type",
+      key: "type",
+      valueEnum: {
+        system: { text: "系统内置", status: "Success" },
+        custom: { text: "自定义", status: "Default" },
+      },
+    },
+    {
       title: "角色描述",
       dataIndex: "description",
       key: "description",
