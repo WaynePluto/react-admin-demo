@@ -27,5 +27,6 @@ module.exports = {
   //   // "<rootDir>/src/views/template/*.spec.ts",
   //   // "<rootDir>/src/views/user/*.spec.ts",
   //   // "<rootDir>/src/views/permission/*.spec.ts",
+  //   // "<rootDir>/src/views/role/*.spec.ts",
   // ],
 };
