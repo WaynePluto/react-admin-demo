@@ -1,25 +1,47 @@
-import type { TemplateDetailResponse } from "@/hono-api-type/modules/template/model";
+import type { PermissionDetailResponse } from "@/hono-api-type/modules/permission/model";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import type { ActionType, ProColumns } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
 import { Button, Modal, Popconfirm, message } from "antd";
 import { omit } from "lodash-es";
 import { useRef, useState } from "react";
-import { useTemplate } from "../hooks/useTemplate";
-import { TemplateForm } from "./TemplateForm";
+import { usePermission } from "../hooks/usePermission";
+import { PermissionForm } from "./PermissionForm";
 
-export function TemplateTable() {
+export function PermissionTable() {
   const [formVisible, setFormVisible] = useState(false);
-  const [editingTemplate, setEditingTemplate] = useState<TemplateDetailResponse | undefined>();
-  const { fetchTemplates, createTemplate, updateTemplate, deleteTemplate } = useTemplate();
+  const [editingPermission, setEditingPermission] = useState<PermissionDetailResponse | undefined>();
+  const { fetchPermissions, createPermission, updatePermission, deletePermission } = usePermission();
   const actionRef = useRef<ActionType>(null);
 
-  const columns: ProColumns<TemplateDetailResponse>[] = [
+  const columns: ProColumns<PermissionDetailResponse>[] = [
     {
-      title: "模板名称",
+      title: "权限名称",
       dataIndex: "name",
       key: "name",
       ellipsis: true,
+    },
+    {
+      title: "权限编码",
+      dataIndex: "code",
+      key: "code",
+      ellipsis: true,
+    },
+    {
+      title: "权限类型",
+      dataIndex: "type",
+      key: "type",
+      valueEnum: {
+        system: { text: "系统权限", status: "Success" },
+        custom: { text: "自定义权限", status: "Default" },
+      },
+    },
+    {
+      title: "描述",
+      dataIndex: "description",
+      key: "description",
+      ellipsis: true,
+      search: false,
     },
     {
       title: "创建时间",
@@ -45,8 +67,8 @@ export function TemplateTable() {
       width: 160,
       render: (_, record) => [
         <Button
-          className="edit-template"
-          key="edit-template"
+          className="edit-permission"
+          key="edit-permission"
           type="link"
           size="small"
           icon={<EditOutlined />}
@@ -56,14 +78,14 @@ export function TemplateTable() {
         </Button>,
         <Popconfirm
           key="delete"
-          title="确定删除这个模板吗？"
+          title="确定删除这个权限吗？"
           onConfirm={() => handleDelete(record.id)}
           okText="确定"
           cancelText="取消"
         >
           <Button
-            key="delete-template"
-            className="delete-template"
+            key="delete-permission"
+            className="delete-permission"
             type="link"
             size="small"
             danger
@@ -77,17 +99,17 @@ export function TemplateTable() {
   ];
 
   const handleAdd = () => {
-    setEditingTemplate(undefined);
+    setEditingPermission(undefined);
     setFormVisible(true);
   };
 
-  const handleEdit = (template: TemplateDetailResponse) => {
-    setEditingTemplate(template);
+  const handleEdit = (permission: PermissionDetailResponse) => {
+    setEditingPermission(permission);
     setFormVisible(true);
   };
 
   const handleDelete = async (id: string) => {
-    const success = await deleteTemplate(id);
+    const success = await deletePermission(id);
     if (success) {
       // 刷新表格
       actionRef.current?.reload();
@@ -96,13 +118,13 @@ export function TemplateTable() {
 
   const handleFormFinish = async (values: any) => {
     let success = false;
-    if (editingTemplate) {
+    if (editingPermission) {
       // 比较原始数据和表单数据，找出变更字段
       const changedValues: Record<string, any> = {};
       let hasChanges = false;
 
       Object.keys(values).forEach(key => {
-        if (JSON.stringify(values[key]) !== JSON.stringify((editingTemplate as any)[key])) {
+        if (JSON.stringify(values[key]) !== JSON.stringify((editingPermission as any)[key])) {
           changedValues[key] = values[key];
           hasChanges = true;
         }
@@ -113,9 +135,9 @@ export function TemplateTable() {
         return true;
       }
 
-      success = await updateTemplate(editingTemplate.id, changedValues);
+      success = await updatePermission(editingPermission.id, changedValues);
     } else {
-      success = await createTemplate(values);
+      success = await createPermission(values);
     }
 
     if (success) {
@@ -127,9 +149,9 @@ export function TemplateTable() {
   };
 
   return (
-    <div className="template-page">
-      <ProTable<TemplateDetailResponse>
-        headerTitle="模板管理"
+    <div className="permission-page">
+      <ProTable<PermissionDetailResponse>
+        headerTitle="权限管理"
         rowKey="id"
         actionRef={actionRef}
         columns={columns}
@@ -153,8 +175,8 @@ export function TemplateTable() {
             }
           });
 
-          // 调用fetchTemplates获取数据
-          const templateList = await fetchTemplates({
+          // 调用fetchPermissions获取数据
+          const permissionList = await fetchPermissions({
             page: params.current || 1,
             pageSize: params.pageSize || 10,
             ...sortParams,
@@ -163,9 +185,9 @@ export function TemplateTable() {
 
           // 返回格式化后的数据
           return {
-            data: templateList.list as TemplateDetailResponse[],
+            data: permissionList.list as PermissionDetailResponse[],
             success: true,
-            total: templateList.total,
+            total: permissionList.total,
           };
         }}
         pagination={{
@@ -186,21 +208,21 @@ export function TemplateTable() {
           },
         }}
         toolBarRender={() => [
-          <Button className="add-template" key="add" type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-            新建模板
+          <Button className="add-permission" key="add" type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+            新建权限
           </Button>,
         ]}
       />
 
       <Modal
-        title={editingTemplate ? "编辑模板" : "新建模板"}
+        title={editingPermission ? "编辑权限" : "新建权限"}
         open={formVisible}
         onCancel={() => setFormVisible(false)}
         footer={null}
         destroyOnHidden
         width={600}
       >
-        <TemplateForm editingTemplate={editingTemplate} onFinish={handleFormFinish} />
+        <PermissionForm editingPermission={editingPermission} onFinish={handleFormFinish} />
       </Modal>
     </div>
   );

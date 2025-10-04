@@ -79,7 +79,7 @@ export function UserTable() {
       fixed: "right",
       width: 160,
       render: (_, record) => [
-        <Button key="edit" type="link" size="small" icon={<EditOutlined />} onClick={() => handleEdit(record)}>
+        <Button key="edit-user" type="link" size="small" icon={<EditOutlined />} onClick={() => handleEdit(record)}>
           编辑
         </Button>,
         <Popconfirm
@@ -89,7 +89,7 @@ export function UserTable() {
           okText="确定"
           cancelText="取消"
         >
-          <Button type="link" size="small" danger icon={<DeleteOutlined />}>
+          <Button key="delete-user" type="link" size="small" danger icon={<DeleteOutlined />}>
             删除
           </Button>
         </Popconfirm>,

@@ -15,11 +15,11 @@ export const useTemplate = () => {
         json: params,
       });
 
-      if (res.ok) {
-        const json = await res.json();
+      const json = await res.json();
+      if (json.code === 200) {
         return json.data;
       } else {
-        message.error("获取模板列表失败");
+        message.error(json.msg || "获取模板列表失败");
         return { total: 0, list: [] };
       }
     } catch (error) {
@@ -34,12 +34,12 @@ export const useTemplate = () => {
         json: data,
       });
 
-      if (res.ok) {
-        const result = await res.json();
-        message.success("创建模板成功");
+      const result = await res.json();
+      if (result.code === 200) {
+        message.success(result.msg || "创建模板成功");
         return true;
       } else {
-        message.error("创建模板失败");
+        message.error(result.msg || "创建模板失败");
         return false;
       }
     } catch (error) {
@@ -55,11 +55,12 @@ export const useTemplate = () => {
         json: data,
       });
 
-      if (res.ok) {
-        message.success("更新模板成功");
+      const result = await res.json();
+      if (result.code === 200) {
+        message.success(result.msg || "更新模板成功");
         return true;
       } else {
-        message.error("更新模板失败");
+        message.error(result.msg || "更新模板失败");
         return false;
       }
     } catch (error) {
@@ -73,12 +74,12 @@ export const useTemplate = () => {
       const res = await templateClient[":id"].$delete({
         param: { id },
       });
-
-      if (res.ok) {
-        message.success("删除模板成功");
+      const json = await res.json();
+      if (json.code === 200) {
+        message.success(json.msg ?? "删除模板成功");
         return true;
       } else {
-        message.error("删除模板失败");
+        message.error(json.msg ?? "删除模板失败");
         return false;
       }
     } catch (error) {
