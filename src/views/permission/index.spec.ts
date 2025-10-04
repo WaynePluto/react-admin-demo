@@ -39,6 +39,11 @@ describe("权限管理页面测试", () => {
     const addCodeInput = await testPage.$('input[id="permission-form-code"]');
     await addCodeInput?.type(permissionCode);
 
+    // 输入权限所属
+    const permissionResource = "测试资源";
+    const addResourceInput = await testPage.$('input[id="permission-form-resource"]');
+    await addResourceInput?.type(permissionResource);
+
     // 点击确认按钮
     const addSubmitButton = await testPage.$('button[id="permission-form-submit"');
     await addSubmitButton?.click();

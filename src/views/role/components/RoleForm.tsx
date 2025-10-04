@@ -1,11 +1,9 @@
-import type {
-  RoleDetailResponse,
-  CreateRoleRequest,
-  UpdateRoleRequest,
-} from "@/hono-api-type/modules/role/model";
+import type { CreateRoleRequest, RoleDetailResponse, UpdateRoleRequest } from "@/hono-api-type/modules/role/model";
 import type { ModalFormProps } from "@ant-design/pro-components";
 import { ProForm, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
+import { Form, TreeSelect } from "antd";
 import { isValidElement } from "react";
+import { usePermissionTree } from "../hooks/usePermissionTree";
 
 interface RoleFormProps extends Omit<ModalFormProps, "onFinish"> {
   editingRole?: RoleDetailResponse;
@@ -15,6 +13,8 @@ interface RoleFormProps extends Omit<ModalFormProps, "onFinish"> {
 
 export function RoleForm({ editingRole, onFinish, title, onCancel, ...props }: RoleFormProps) {
   const isEdit = !!editingRole;
+  const { treeData, checkedKeys, handleCheck, loading } = usePermissionTree(editingRole);
+  const [form] = Form.useForm();
 
   // Ensure title is string or undefined
   const safeTitle: string | undefined =
@@ -24,6 +24,9 @@ export function RoleForm({ editingRole, onFinish, title, onCancel, ...props }: R
     return await onFinish(values);
   };
 
+  // 根据是否是系统角色决定是否禁用权限选择
+  const isPermissionSelectDisabled = isEdit && editingRole?.type === "system";
+
   return (
     <ProForm
       {...props}
@@ -31,6 +34,7 @@ export function RoleForm({ editingRole, onFinish, title, onCancel, ...props }: R
       layout="vertical"
       onFinish={handleFinish}
       initialValues={editingRole}
+      form={form}
       submitter={{
         searchConfig: {
           submitText: isEdit ? "更新" : "创建",
@@ -74,6 +78,21 @@ export function RoleForm({ editingRole, onFinish, title, onCancel, ...props }: R
           maxLength: 200,
         }}
       />
+
+      {/* 权限选择树 */}
+      <Form.Item label="权限分配" name="permission_codes">
+        <TreeSelect
+          treeData={treeData}
+          value={checkedKeys}
+          onChange={handleCheck}
+          multiple
+          treeCheckable
+          placeholder="请选择权限"
+          style={{ maxHeight: 300, overflow: "auto" }}
+          disabled={isPermissionSelectDisabled}
+          loading={loading}
+        />
+      </Form.Item>
     </ProForm>
   );
 }

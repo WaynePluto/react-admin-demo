@@ -37,6 +37,7 @@ export declare const permissionApp: import("hono/hono-base").HonoBase<import("ho
                     updated_at: string;
                     name: string;
                     code: string;
+                    resource: string;
                     description?: string | undefined;
                     type: "system" | "custom";
                 };
@@ -110,6 +111,7 @@ export declare const permissionApp: import("hono/hono-base").HonoBase<import("ho
                         updated_at?: string | undefined;
                         name?: string | undefined;
                         code?: string | undefined;
+                        resource?: string | undefined;
                         description?: string | undefined;
                         type?: "custom" | "system" | undefined;
                     }[];

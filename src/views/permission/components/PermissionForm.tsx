@@ -72,6 +72,16 @@ export function PermissionForm({ editingPermission, onFinish, title, onCancel, .
           maxLength: 100,
         }}
       />
+      <ProFormText
+        name="resource"
+        label="权限所属"
+        placeholder="请输入权限所属"
+        rules={[{ required: true, message: "请输入权限所属" }]}
+        fieldProps={{
+          id: "permission-form-resource",
+          maxLength: 100,
+        }}
+      />
       <ProFormRadio.Group
         name="type"
         label="权限类型"
@@ -79,7 +89,7 @@ export function PermissionForm({ editingPermission, onFinish, title, onCancel, .
         disabled
         options={[
           {
-            label: "系统权限",
+            label: "系统内置权限",
             value: "system",
           },
           {

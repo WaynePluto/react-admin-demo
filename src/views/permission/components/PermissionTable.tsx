@@ -29,12 +29,19 @@ export function PermissionTable() {
       ellipsis: true,
     },
     {
+      title: "权限所属",
+      dataIndex: "resource",
+      key: "resource",
+      ellipsis: true,
+      search: false,
+    },
+    {
       title: "权限类型",
       dataIndex: "type",
       key: "type",
       valueEnum: {
-        system: { text: "系统权限", status: "Success" },
-        custom: { text: "自定义权限", status: "Default" },
+        system: { text: "系统内置", status: "Success" },
+        custom: { text: "自定义", status: "Default" },
       },
     },
     {

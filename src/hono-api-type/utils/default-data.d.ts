@@ -1,27 +1,10 @@
+import { CreatePermissionRequest } from "@/modules/permission/model";
+import { CreateRoleRequest } from "@/modules/role/model";
 /**
  * 默认权限列表
  */
-export declare const defaultPermissions: {
-    name: string;
-    code: string;
-    description: string;
-    resource: string;
-    action: string;
-    type: string;
-}[];
+export declare const defaultPermissions: CreatePermissionRequest[];
 /**
  * 默认角色列表
  */
-export declare const defaultRoles: ({
-    name: string;
-    code: string;
-    description: string;
-    type: string;
-    permission_codes?: undefined;
-} | {
-    name: string;
-    code: string;
-    description: string;
-    permission_codes: string[];
-    type: string;
-})[];
+export declare const defaultRoles: CreateRoleRequest[];
