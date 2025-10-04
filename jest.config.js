@@ -22,9 +22,10 @@ module.exports = {
 
   testMatch: ["<rootDir>/src/**/*/*.spec.ts"],
   // testMatch: [
-  //   "<rootDir>/src/views/login/*.spec.ts",
-  //   "<rootDir>/src/views/home/*.spec.ts",
-  //   "<rootDir>/src/views/template/*.spec.ts",
-  //   "<rootDir>/src/views/user/*.spec.ts",
+  //   // "<rootDir>/src/views/login/*.spec.ts",
+  //   // "<rootDir>/src/views/home/*.spec.ts",
+  //   // "<rootDir>/src/views/template/*.spec.ts",
+  //   // "<rootDir>/src/views/user/*.spec.ts",
+  //   // "<rootDir>/src/views/permission/*.spec.ts",
   // ],
 };
