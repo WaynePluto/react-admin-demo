@@ -6,7 +6,7 @@ describe("用户管理页面测试", () => {
   let testPage: Page;
 
   beforeAll(async () => {
-    const { browser, page } = await getLoginBrower(false);
+    const { browser, page } = await getLoginBrower();
     testBrowser = browser;
     testPage = page;
   });
@@ -61,7 +61,7 @@ describe("用户管理页面测试", () => {
     await editButton?.click();
     const editNickname = "测试用户" + Math.floor(Math.random() * 10000);
     const editNicknameInput = await testPage.$('input[id="nickname"]');
-    console.log("🚀 ~ editNicknameInput:", editNicknameInput === null);
+
     await editNicknameInput?.type(editNickname);
 
     // 点击确认按钮

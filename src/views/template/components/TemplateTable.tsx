@@ -16,13 +16,6 @@ export function TemplateTable() {
 
   const columns: ProColumns<TemplateDetailResponse>[] = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      ellipsis: true,
-      search: false,
-    },
-    {
       title: "模板名称",
       dataIndex: "name",
       key: "name",

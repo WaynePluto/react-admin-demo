@@ -20,11 +20,11 @@ module.exports = {
     "@/(.*)": "<rootDir>/src/$1",
   },
 
-  // testMatch: ["<rootDir>/src/**/*/*.spec.ts"],
-  testMatch: [
-    // "<rootDir>/src/views/login/*.spec.ts",
-    // "<rootDir>/src/views/home/*.spec.ts",
-    // "<rootDir>/src/views/template/*.spec.ts",
-    "<rootDir>/src/views/user/*.spec.ts",
-  ],
+  testMatch: ["<rootDir>/src/**/*/*.spec.ts"],
+  // testMatch: [
+  //   "<rootDir>/src/views/login/*.spec.ts",
+  //   "<rootDir>/src/views/home/*.spec.ts",
+  //   "<rootDir>/src/views/template/*.spec.ts",
+  //   "<rootDir>/src/views/user/*.spec.ts",
+  // ],
 };

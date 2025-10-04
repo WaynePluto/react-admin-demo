@@ -42,9 +42,9 @@ describe("temlate 页面测试", () => {
 
     // 等待提示消失
     await new Promise(resolve => setTimeout(resolve, 500));
-    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的第二个td元素，在下面的span的文本
+    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的第1个td元素也就是名称，在下面的span的文本
     const addedSpanText = await testPage
-      .locator("tbody tr:nth-child(2) td:nth-child(2) span")
+      .locator("tbody tr:nth-child(2) td:nth-child(1) span")
       .map(el => el.textContent)
       .wait();
     expect(addedSpanText).toContain(addTempalteName);
@@ -66,9 +66,9 @@ describe("temlate 页面测试", () => {
     const editMsg = await testPage.locator(".ant-message-custom-content.ant-message-success").wait();
     expect(editMsg).not.toBeNull();
     await new Promise(resolve => setTimeout(resolve, 500));
-    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的第二个td元素，在下面的span的文本
+    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的第1个td元素也就是名称单元格，在下面的span的文本
     const editSpanText = await testPage
-      .locator("tbody tr:nth-child(2) td:nth-child(2) span")
+      .locator("tbody tr:nth-child(2) td:nth-child(1) span")
       .map(el => el.textContent)
       .wait();
     expect(editSpanText).toContain(editTemplateName);
