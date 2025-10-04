@@ -56,6 +56,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
               icon: <TeamOutlined />,
             },
             {
+              path: "/role",
+              name: "角色管理",
+              icon: <TeamOutlined />,
+            },
+            {
               path: "/permission",
               name: "权限管理",
               icon: <SafetyCertificateOutlined />,
