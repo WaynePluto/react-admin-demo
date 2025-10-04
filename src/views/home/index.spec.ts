@@ -21,7 +21,6 @@ describe("home 页面测试", () => {
 
   it("测试首页加载功能", async () => {
     await testPage.goto("http://localhost:8080/");
-    await testPage.setViewport({ width: 1080, height: 1024 });
     // 验证首页内容是否加载
     const homePage = await testPage.locator(".home-page").wait();
     expect(homePage).toBeDefined();

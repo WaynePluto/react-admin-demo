@@ -51,7 +51,13 @@ export function TemplateTable() {
       fixed: "right",
       width: 160,
       render: (_, record) => [
-        <Button key="edit" type="link" size="small" icon={<EditOutlined />} onClick={() => handleEdit(record)}>
+        <Button
+          className="edit-template"
+          type="link"
+          size="small"
+          icon={<EditOutlined />}
+          onClick={() => handleEdit(record)}
+        >
           编辑
         </Button>,
         <Popconfirm
@@ -61,7 +67,7 @@ export function TemplateTable() {
           okText="确定"
           cancelText="取消"
         >
-          <Button type="link" size="small" danger icon={<DeleteOutlined />}>
+          <Button className="delete-template" type="link" size="small" danger icon={<DeleteOutlined />}>
             删除
           </Button>
         </Popconfirm>,

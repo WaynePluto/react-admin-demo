@@ -22,7 +22,7 @@ describe("login 页面测试", () => {
 
   it("测试登录功能 - 成功登录", async () => {
     // 打开登录页面
-    await page.setViewport({ width: 1080, height: 1024 });
+    await page.setViewport({ width: 1366, height: 768 });
 
     await page.goto("http://localhost:8080/login");
 
@@ -56,7 +56,6 @@ describe("login 页面测试", () => {
   it("测试登录功能 - 错误凭据", async () => {
     // 打开登录页面
     await page.goto("http://localhost:8080/login");
-    await page.setViewport({ width: 1080, height: 1024 });
 
     // 等待登录表单加载完成
     await page.waitForSelector(".ant-pro-form-login-container");
@@ -83,7 +82,6 @@ describe("login 页面测试", () => {
   it("测试登录功能 - 表单验证", async () => {
     // 打开登录页面
     await page.goto("http://localhost:8080/login");
-    await page.setViewport({ width: 1080, height: 1024 });
 
     // 等待登录表单加载完成
     await page.waitForSelector(".ant-pro-form-login-container");

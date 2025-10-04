@@ -4,10 +4,11 @@ export async function getLoginBrower(headless = true) {
   const browser = await puppeteer.launch({
     executablePath: process.env.ChromePath,
     headless,
+    args: ["--window-size=1366,768"],
   });
   const page = await browser.newPage();
   // 打开登录页面
-  await page.setViewport({ width: 1080, height: 1024 });
+  await page.setViewport({ width: 1366, height: 768, deviceScaleFactor: 1 });
   await page.goto("http://localhost:8080/login");
   // 等待登录表单加载完成
   await page.waitForSelector(".ant-pro-form-login-container");

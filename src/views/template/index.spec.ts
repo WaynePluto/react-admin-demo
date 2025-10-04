@@ -6,7 +6,7 @@ describe("temlate 页面测试", () => {
   let testPage: Page;
 
   beforeAll(async () => {
-    const { browser, page } = await getLoginBrower(false);
+    const { browser, page } = await getLoginBrower();
     testBrowser = browser;
     testPage = page;
   });
@@ -21,7 +21,6 @@ describe("temlate 页面测试", () => {
 
   it("测试页面加载功能", async () => {
     await testPage.goto("http://localhost:8080/template");
-    await testPage.setViewport({ width: 1080, height: 1024 });
     // 验证内容是否加载
     const content = await testPage.locator(".template-page").wait();
     expect(content).not.toBeNull();
@@ -31,13 +30,60 @@ describe("temlate 页面测试", () => {
     await testPage.click(".add-template");
     // 只写必填项
     // 输入模板名称
-    const nameInput = await testPage.$('input[id="template-form-name"]');
-    await nameInput?.type("模板自动化测试");
+    const addTempalteName = "模板(测试)" + Math.random().toFixed(2);
+    const addNameInput = await testPage.$('input[id="template-form-name"]');
+    await addNameInput?.type(addTempalteName);
     // 点击确认按钮
-    const submitButton = await testPage.$('button[id="template-form-submit"');
-    await submitButton?.click();
+    const addSubmitButton = await testPage.$('button[id="template-form-submit"');
+    await addSubmitButton?.click();
     // 验证添加成功提示语
-    const res = await testPage.locator(".ant-message-custom-content.ant-message-success").wait();
-    expect(res).not.toBeNull();
+    const addMsg = await testPage.locator(".ant-message-custom-content.ant-message-success").wait();
+    expect(addMsg).not.toBeNull();
+
+    // 等待提示消失
+    await new Promise(resolve => setTimeout(resolve, 500));
+    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的第二个td元素，在下面的span的文本
+    const addedSpanText = await testPage
+      .locator("tbody tr:nth-child(2) td:nth-child(2) span")
+      .map(el => el.textContent)
+      .wait();
+    expect(addedSpanText).toContain(addTempalteName);
+  });
+
+  it("测试编辑模板功能", async () => {
+    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的最后一个td元素, 下面的div, 下面的第一个button
+    const editButton = await testPage.$("tbody tr:nth-child(2) td:last-child div button:first-child");
+    await editButton?.click();
+    const editTemplateName = "模板(测试)" + Math.random().toFixed(2);
+    const editNameInput = await testPage.$('input[id="template-form-name"]');
+    await editNameInput?.evaluate(el => (el.value = ""));
+    await editNameInput?.type(editTemplateName);
+
+    // 点击确认按钮
+    const editSubmitButton = await testPage.$('button[id="template-form-submit"');
+    await editSubmitButton?.click();
+    // 验证添加成功提示语
+    const editMsg = await testPage.locator(".ant-message-custom-content.ant-message-success").wait();
+    expect(editMsg).not.toBeNull();
+    await new Promise(resolve => setTimeout(resolve, 500));
+    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的第二个td元素，在下面的span的文本
+    const editSpanText = await testPage
+      .locator("tbody tr:nth-child(2) td:nth-child(2) span")
+      .map(el => el.textContent)
+      .wait();
+    expect(editSpanText).toContain(editTemplateName);
+  });
+
+  it("测试删除模板功能", async () => {
+    // locator 选择器定位到 tbody元素下的第二个tr子元素，再下面的最后一个td元素, 下面的div, 下面的第二个button
+    const deleteButton = await testPage.$("tbody tr:nth-child(2) td:last-child div button:nth-child(2)");
+    await deleteButton?.click();
+    await new Promise(resolve => setTimeout(resolve, 500));
+    // 点击确认按钮
+    const deleteSubmitButton = await testPage.$(".ant-popconfirm-buttons button:last-child");
+    await deleteSubmitButton?.click();
+    // 验证删除成功提示语
+    const deleteMsg = await testPage.locator(".ant-message-custom-content.ant-message-success").wait();
+    expect(deleteMsg).not.toBeNull();
   });
 });
