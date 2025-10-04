@@ -51,7 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               icon: <FileOutlined />,
             },
             {
-              path: "/users",
+              path: "/user",
               name: "用户管理",
               icon: <TeamOutlined />,
             },
